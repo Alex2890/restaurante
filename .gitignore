@@ -26,9 +26,8 @@ coverage
 *.sw?
 
 # Environment variables - but not example files
-<<<<<<< HEAD
-frontend/.env
-backend/.env
+restaurante/frontend/.env
+restaurante/backend/.env
 .flaskenv
 !.env.example
 !.flaskenv.example
