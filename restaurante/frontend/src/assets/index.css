@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+/* Custom Font Classes */
+.font-brand {
+  font-family: 'Parisienne', cursive;
+}
+
+.font-nav {
+  font-family: 'Dancing Script', cursive;
+}
+
+.font-subheading {
+  font-family: 'Cormorant Upright', serif;
+}
+
+.font-body {
+  font-family: 'Italianno', cursive;
+}
+
+/* Custom text sizes for better readability with script fonts */
+.text-body-script {
+  font-size: 1.5rem;
+  line-height: 1.75;
+}
