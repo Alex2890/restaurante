@@ -26,6 +26,7 @@ coverage
 *.sw?
 
 # Environment variables - but not example files
+<<<<<<< HEAD
 frontend/.env
 backend/.env
 .flaskenv
