@@ -4,9 +4,9 @@
     <main class="flex-grow">
       <router-view />
     </main>
-    <footer class="bg-gray-800 text-white py-6">
+    <footer class="bg-burgundy text-cream py-6">
       <div class="container mx-auto px-6 text-center">
-        <p>&copy; {{ new Date().getFullYear() }} Fine Dining Restaurant. All rights reserved.</p>
+        <p>&copy; {{ new Date().getFullYear() }} <span class="text-gold">Noir Et Or</span>. All rights reserved.</p>
       </div>
     </footer>
   </div>

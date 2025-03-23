@@ -12,6 +12,16 @@ const routes = [
     component: () => import('../views/Menu.vue')
   },
   {
+    path: '/menu/food',
+    name: 'FoodMenu',
+    component: () => import('../views/FoodMenu.vue')
+  },
+  {
+    path: '/menu/drinks',
+    name: 'DrinksMenu',
+    component: () => import('../views/DrinksMenu.vue')
+  },
+  {
     path: '/reservations',
     name: 'Reservations',
     component: () => import('../views/Reservations.vue')

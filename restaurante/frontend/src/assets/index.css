@@ -1,5 +1,121 @@
 @import "tailwindcss";
 
+/* Premium Fine Dining Color Palette */
+:root {
+  /* Primary Colors */
+  --burgundy: #750D37;
+  --gold: #D4AF37;
+  --charcoal: #212121;
+  
+  /* Secondary Colors */
+  --cream: #F5F1E6;
+  --wood-brown: #4A3927;
+  --slate-gray: #4F4F4F;
+  
+  /* Accent Colors */
+  --emerald: #165049;
+  --pearl: #FAFAFA;
+}
+
+/* Color Classes - Background */
+.bg-burgundy {
+  background-color: var(--burgundy);
+}
+
+.bg-gold {
+  background-color: var(--gold);
+}
+
+.bg-charcoal {
+  background-color: var(--charcoal);
+}
+
+.bg-cream {
+  background-color: var(--cream);
+}
+
+.bg-wood {
+  background-color: var(--wood-brown);
+}
+
+.bg-slate {
+  background-color: var(--slate-gray);
+}
+
+.bg-emerald {
+  background-color: var(--emerald);
+}
+
+.bg-pearl {
+  background-color: var(--pearl);
+}
+
+/* Color Classes - Text */
+.text-burgundy {
+  color: var(--burgundy);
+}
+
+.text-gold {
+  color: var(--gold);
+}
+
+.text-charcoal {
+  color: var(--charcoal);
+}
+
+.text-cream {
+  color: var(--cream);
+}
+
+.text-wood {
+  color: var(--wood-brown);
+}
+
+.text-slate {
+  color: var(--slate-gray);
+}
+
+.text-emerald {
+  color: var(--emerald);
+}
+
+.text-pearl {
+  color: var(--pearl);
+}
+
+/* Color Classes - Border */
+.border-burgundy {
+  border-color: var(--burgundy);
+}
+
+.border-gold {
+  border-color: var(--gold);
+}
+
+.border-charcoal {
+  border-color: var(--charcoal);
+}
+
+.border-cream {
+  border-color: var(--cream);
+}
+
+.border-wood {
+  border-color: var(--wood-brown);
+}
+
+.border-slate {
+  border-color: var(--slate-gray);
+}
+
+.border-emerald {
+  border-color: var(--emerald);
+}
+
+.border-pearl {
+  border-color: var(--pearl);
+}
+
 /* Custom Font Classes */
 .font-brand {
   font-family: 'Parisienne', cursive;
@@ -21,4 +137,48 @@
 .text-body-script {
   font-size: 1.5rem;
   line-height: 1.75;
+}
+
+/* Common Component Styling */
+.btn-primary {
+  background-color: var(--gold);
+  color: var(--charcoal);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.125rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #C19E30; /* Slightly darker gold */
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--cream);
+  border: 2px solid var(--cream);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.125rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--cream);
+  color: var(--burgundy);
+  transform: scale(1.05);
+}
+
+.section-heading {
+  font-family: 'Playfair Display', serif;
+  color: var(--burgundy);
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Gradients */
+.bg-gradient-fine-dining {
+  background: linear-gradient(to right, var(--burgundy), var(--wood-brown), var(--burgundy));
 }
