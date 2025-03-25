@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import AuthService from '../services/auth.service'
-import jwtDecode from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode';
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref(localStorage.getItem('token') || null)
