@@ -63,7 +63,7 @@
               :alt="meal.strMeal" 
               class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
             >
-            <div class="absolute inset-0 bg-burgundy bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300"></div>
+            <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300"></div>
           </div>
           <div class="p-4">
             <h3 class="text-burgundy font-serif text-xl mb-2 group-hover:text-gold transition-colors">{{ meal.strMeal }}</h3>
@@ -88,7 +88,7 @@
             <img 
               :src="selectedMeal.strMealThumb" 
               :alt="selectedMeal.strMeal" 
-              class="w-full h-64 object-cover"
+              class="w-full h-auto max-h-100 object-cover"
             >
           </div>
           <div class="p-6">
@@ -97,7 +97,7 @@
               <span class="bg-gold bg-opacity-20 text-burgundy px-3 py-1 rounded-full text-sm">
                 {{ selectedMeal.strCategory }}
               </span>
-              <span v-if="selectedMeal.strArea" class="bg-burgundy bg-opacity-10 text-burgundy px-3 py-1 rounded-full text-sm">
+              <span v-if="selectedMeal.strArea" class="bg-gold bg-opacity-10 text-burgundy px-3 py-1 rounded-full text-sm">
                 {{ selectedMeal.strArea }}
               </span>
             </div>
@@ -110,8 +110,6 @@
               </li>
             </ul>
 
-            <h3 class="text-xl text-wood mb-2">Instructions</h3>
-            <p class="text-charcoal whitespace-pre-line">{{ selectedMeal.strInstructions }}</p>
           </div>
         </div>
       </div>

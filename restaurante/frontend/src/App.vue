@@ -15,15 +15,3 @@
 <script setup>
 import Navbar from './components/Navbar.vue';
 </script>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;700&display=swap');
-
-.font-serif {
-  font-family: 'Playfair Display', serif;
-}
-
-body {
-  font-family: 'Lato', sans-serif;
-}
-</style>

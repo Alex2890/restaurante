@@ -63,7 +63,7 @@
               :alt="drink.strDrink" 
               class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
             >
-            <div class="absolute inset-0 bg-burgundy bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300"></div>
+            <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300"></div>
           </div>
           <div class="p-4">
             <h3 class="text-burgundy font-serif text-xl mb-2 group-hover:text-gold transition-colors">{{ drink.strDrink }}</h3>
@@ -88,33 +88,30 @@
             <img 
               :src="selectedDrink.strDrinkThumb" 
               :alt="selectedDrink.strDrink" 
-              class="w-full h-64 object-cover"
+              class="w-full h-auto max-h-100 object-contain"
             >
           </div>
           <div class="p-6">
             <h2 class="text-3xl font-serif text-burgundy mb-2">{{ selectedDrink.strDrink }}</h2>
             <div class="flex flex-wrap gap-2 mb-4">
-              <span class="bg-gold bg-opacity-20 text-burgundy px-3 py-1 rounded-full text-sm">
+              <span class="bg-gold bg-opacity-20 text-slate-950 font-bold px-3 py-1 rounded-full text-sm">
                 {{ selectedDrink.strCategory }}
               </span>
-              <span v-if="selectedDrink.strAlcoholic" class="bg-burgundy bg-opacity-10 text-burgundy px-3 py-1 rounded-full text-sm">
+              <span v-if="selectedDrink.strAlcoholic" class="bg-burgundy bg-opacity-10 text-slate-950 font-bold px-3 py-1 rounded-full text-sm">
                 {{ selectedDrink.strAlcoholic }}
               </span>
-              <span v-if="selectedDrink.strGlass" class="bg-wood bg-opacity-10 text-wood px-3 py-1 rounded-full text-sm">
+              <span v-if="selectedDrink.strGlass" class="bg-wood bg-opacity-10 text-slate-950 font-bold px-3 py-1 rounded-full text-sm">
                 {{ selectedDrink.strGlass }}
               </span>
             </div>
             
-            <h3 class="text-xl text-wood mb-2 mt-6">Ingredients</h3>
+            <h3 class="text-xl text-wood mb-2 mt-6 underline">Ingredients</h3>
             <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
               <li v-for="(ingredient, index) in getDrinkIngredients(selectedDrink)" :key="index" class="flex items-center">
                 <span class="text-gold mr-2">•</span>
                 {{ ingredient.measure }} {{ ingredient.name }}
               </li>
             </ul>
-
-            <h3 class="text-xl text-wood mb-2">Instructions</h3>
-            <p class="text-charcoal whitespace-pre-line">{{ selectedDrink.strInstructions }}</p>
           </div>
         </div>
       </div>

@@ -8,12 +8,12 @@
         <router-link to="/menu/food" class="relative rounded-lg overflow-hidden shadow-xl group cursor-pointer h-80">
           <div 
             class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-            style="background-image: url('https://images.unsplash.com/photo-1514326640560-7d063ef2aed5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"
-          ></div>
-          <div class="absolute inset-0 bg-burgundy bg-opacity-60 group-hover:bg-opacity-70 transition-all duration-300"></div>
+            :style="foodCardStyle"
+          >
+          </div>          
           <div class="absolute inset-0 flex items-center justify-center flex-col">
-            <h2 class="text-4xl font-serif text-gold mb-2">Food</h2>
-            <p class="text-cream">Discover our exquisite dishes</p>
+            <h2 class="text-7xl font-serif text-gold font-extrabold mb-2">Food</h2>
+            <p class="text-xl text-white font-extrabold">Discover our exquisite dishes</p>
             <div class="mt-6 border-b-2 border-gold w-12 group-hover:w-24 transition-all duration-300"></div>
           </div>
         </router-link>
@@ -22,12 +22,12 @@
         <router-link to="/menu/drinks" class="relative rounded-lg overflow-hidden shadow-xl group cursor-pointer h-80">
           <div 
             class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-            style="background-image: url('https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"
-          ></div>
-          <div class="absolute inset-0 bg-burgundy bg-opacity-60 group-hover:bg-opacity-70 transition-all duration-300"></div>
+            :style="drinkCardStyle"
+          >
+          </div>          
           <div class="absolute inset-0 flex items-center justify-center flex-col">
-            <h2 class="text-4xl font-serif text-gold mb-2">Drinks</h2>
-            <p class="text-cream">Explore our signature drinks</p>
+            <h2 class="text-7xl font-serif text-gold font-extrabold mb-2">Drinks</h2>
+            <p class="text-xl text-white font-extrabold">Explore our signature drinks</p>
             <div class="mt-6 border-b-2 border-gold w-12 group-hover:w-24 transition-all duration-300"></div>
           </div>
         </router-link>
@@ -37,5 +37,9 @@
 </template>
 
 <script setup>
-// Main menu page - selection between food and drinks
+import foodCard from '@/assets/images/foodCard.jpg';
+import drinkCard from '@/assets/images/drinkCard.jpg';
+
+const foodCardStyle = `background-image: url('${foodCard}'); background-size: cover; background-position: center;`;
+const drinkCardStyle = `background-image: url('${drinkCard}'); background-size: cover; background-position: center;`;
 </script>
