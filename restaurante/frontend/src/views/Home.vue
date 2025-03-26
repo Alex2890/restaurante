@@ -18,17 +18,49 @@
     <section class="py-20 px-6 bg-cream">
       <div class="container mx-auto max-w-6xl">
         <h2 class="section-heading">Featured Dishes</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-          <div class="dish-card bg-pearl rounded-lg shadow-md overflow-hidden" v-for="dish in featuredDishes" :key="dish.id">
-            <div class="h-64 bg-slate bg-opacity-10 relative">
-              <!-- Placeholder for dish image, to be replaced with actual images -->
-              <div class="absolute inset-0 flex items-center justify-center text-slate">
-                <span class="text-sm">Image coming soon</span>
+        
+        <!-- Loading State -->
+        <div v-if="loading" class="flex justify-center items-center py-20">
+          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-burgundy"></div>
+        </div>
+        
+        <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div 
+            class="dish-card bg-pearl rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300 hover:shadow-xl" 
+            v-for="dish in featuredDishes" 
+            :key="dish.idMeal"
+          >
+            <div class="h-64 relative overflow-hidden group">
+              <img 
+                :src="dish.strMealThumb" 
+                :alt="dish.strMeal" 
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              >
+              <div class="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                <div class="scale-0 group-hover:scale-100 transition-transform duration-300">
+                  <div class="bg-gold text-burgundy px-4 py-2 rounded-sm font-bold transform rotate-0">
+                    {{ dish.strCategory }}
+                  </div>
+                </div>
               </div>
             </div>
             <div class="p-6">
-              <h3 class="text-2xl font-serif text-burgundy mb-3">{{ dish.name }}</h3>
-              <p class="text-charcoal">{{ dish.description }}</p>
+              <h3 class="text-2xl font-serif text-burgundy mb-3 font-subheading">{{ dish.strMeal }}</h3>
+              <p class="text-charcoal line-clamp-3 mb-4">
+                {{ dish.strInstructions ? dish.strInstructions.slice(0, 120) + '...' : 'A delectable dish prepared with the finest ingredients.' }}
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span v-if="dish.strArea" class="text-sm text-slate italic">{{ dish.strArea }} Cuisine</span>
+                <span v-if="dish.strTags" class="text-sm text-slate italic">• {{ dish.strTags }}</span>
+              </div>
+              <div class="mt-4 text-center">
+                <router-link 
+                  :to="'/menu/food'" 
+                  class="inline-block px-4 py-2 border border-gold text-gold hover:bg-gold hover:text-burgundy font-bold transition-colors duration-300 rounded-sm"
+                >
+                  View Recipe &rarr;
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -72,28 +104,107 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import heroImage from '@/assets/images/hero-image.jpg';
+import MenuService from '../services/menu.service';
 
 const backgroundImage = `background-image: url('${heroImage}'); background-size: cover; background-position: center;`;
 
-const featuredDishes = ref([
-  {
-    id: 1,
-    name: 'Truffle Risotto',
-    description: 'Creamy risotto infused with black truffle and aged parmesan.'
-  },
-  {
-    id: 2,
-    name: 'Seared Scallops',
-    description: 'Pan-seared scallops with citrus reduction and micro greens.'
-  },
-  {
-    id: 3,
-    name: 'Filet Mignon',
-    description: 'Prime cut filet with red wine reduction and truffle butter.'
+const featuredDishes = ref([]);
+const loading = ref(true);
+
+// Function to fetch random meals
+async function fetchRandomMeals() {
+  loading.value = true;
+  try {
+    // Fetch a few random categories
+    const categories = await MenuService.getMealCategories();
+    let randomMeals = [];
+    
+    if (categories && categories.length > 0) {
+      // Create an array of promises for fetching meals from random categories
+      const fetchPromises = [];
+      const randomCats = [...categories].sort(() => 0.5 - Math.random()).slice(0, 3);
+      
+      for (const category of randomCats) {
+        fetchPromises.push(MenuService.getMealsByCategory(category.strCategory));
+      }
+      
+      // Wait for all promises to resolve
+      const results = await Promise.all(fetchPromises);
+      
+      // Process the results to get one random meal from each category
+      for (const categoryMeals of results) {
+        if (categoryMeals && categoryMeals.length > 0) {
+          // Get a random meal from this category
+          const randomMeal = categoryMeals[Math.floor(Math.random() * categoryMeals.length)];
+          // Fetch full meal details to get more information
+          const mealDetails = await MenuService.getMealById(randomMeal.idMeal);
+          if (mealDetails) {
+            randomMeals.push(mealDetails);
+          }
+          
+          // If we have 3 meals, stop fetching
+          if (randomMeals.length >= 3) {
+            break;
+          }
+        }
+      }
+    }
+    
+    // If we couldn't get 3 meals from the categories, fall back to other categories
+    if (randomMeals.length < 3) {
+      // Try to fetch meals from other categories
+      const remainingCategories = categories.filter(cat => 
+        !randomMeals.some(meal => meal.strCategory === cat.strCategory)
+      );
+      
+      for (let i = 0; randomMeals.length < 3 && i < remainingCategories.length; i++) {
+        const categoryMeals = await MenuService.getMealsByCategory(remainingCategories[i].strCategory);
+        if (categoryMeals && categoryMeals.length > 0) {
+          const randomMeal = categoryMeals[Math.floor(Math.random() * categoryMeals.length)];
+          const mealDetails = await MenuService.getMealById(randomMeal.idMeal);
+          if (mealDetails && !randomMeals.some(meal => meal.idMeal === mealDetails.idMeal)) {
+            randomMeals.push(mealDetails);
+          }
+        }
+      }
+    }
+    
+    // Update the featuredDishes with our random meals
+    featuredDishes.value = randomMeals.slice(0, 3);
+  } catch (error) {
+    console.error('Error fetching random meals:', error);
+    // Fallback to static data if API fails
+    featuredDishes.value = [
+      {
+        idMeal: '1',
+        strMeal: 'Truffle Risotto',
+        strCategory: 'Italian',
+        strMealThumb: 'https://www.themealdb.com/images/media/meals/wssvvs1511785879.jpg'
+      },
+      {
+        idMeal: '2',
+        strMeal: 'Seared Scallops',
+        strCategory: 'Seafood',
+        strMealThumb: 'https://www.themealdb.com/images/media/meals/rqtxvr1511792990.jpg'
+      },
+      {
+        idMeal: '3',
+        strMeal: 'Filet Mignon',
+        strCategory: 'Beef',
+        strMealThumb: 'https://www.themealdb.com/images/media/meals/1520084413.jpg'
+      }
+    ];
+  } finally {
+    loading.value = false;
   }
-]);
+}
+
+// Fetch random meals when component is mounted
+onMounted(() => {
+  fetchRandomMeals();
+});
 
 const testimonials = ref([
   {
@@ -115,5 +226,27 @@ const testimonials = ref([
 </script>
 
 <style scoped>
-/* Styling will be enhanced with TailwindCSS */
+/* Additional utilities not provided by default in TailwindCSS */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dish-card {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.dish-card .p-6 {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dish-card .text-center {
+  margin-top: auto;
+}
 </style>
